@@ -1,0 +1,248 @@
+<!--
+/**
+ * © 2026 Bernie Vorster / WebWizSystems
+ * 
+ * Project: Ayoba Scrollytelling
+ * File: buyer_template.html
+ * 
+ * This codebase is proprietary and confidential.
+ * Unauthorized use, copying, modification, or distribution is strictly prohibited.
+ * 
+ * Built & maintained by WebWizSystems
+ * https://webwizsystems.com
+ * 
+ * Created: 2026-05-26
+ * Last Updated: 2026-05-26
+ * Signature ID: WWZ-AYOBA-SCROLLYTELLING-2026-911
+ */
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #050505;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      background-color: #050505;
+      padding: 40px 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #0a0a0a;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .header {
+      padding: 40px 40px 20px 40px;
+      text-align: center;
+    }
+    .brand {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background-color: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 9999px;
+      color: #22c55e;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .content { padding: 0 40px; }
+    .greeting { text-align: center; margin-bottom: 30px; }
+    .greeting h1 {
+      color: #d4af37;
+      font-size: 28px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin: 0 0 10px 0;
+    }
+    .greeting p {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .divider {
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.05);
+      margin: 30px 0;
+    }
+    .details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    .details-row td { padding: 12px 0; font-size: 13px; }
+    .label {
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+    .val { color: #ffffff; font-weight: bold; text-align: right; }
+    .val-mono {
+      color: #ffffff;
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-align: right;
+    }
+    .val-gold { color: #d4af37; font-weight: 500; text-align: right; }
+    .val-tracking {
+      color: #d4af37;
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-align: right;
+      font-size: 15px;
+    }
+    .val-payment {
+      color: #ffffff;
+      font-weight: bold;
+      text-align: right;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .address-box {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 10px;
+    }
+    .address-title {
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-bottom: 12px;
+    }
+    .address-text {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .footer {
+      background-color: rgba(255, 255, 255, 0.02);
+      padding: 30px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .footer-button {
+      display: block;
+      background-color: #ffffff;
+      color: #000000;
+      text-align: center;
+      text-decoration: none;
+      padding: 16px 0;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+    .footer-text {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="brand">Drop Selling International</div>
+        <div class="status-badge">Payment Confirmed</div>
+      </div>
+      <div class="content">
+        <div class="greeting">
+          <h1>Thank You, {{buyer_name}}!</h1>
+          <p>Your order has been received and confirmed.</p>
+        </div>
+        <div class="divider"></div>
+        <table class="details-table">
+          <tr class="details-row">
+            <td class="label">Order Reference</td>
+            <td class="val-mono">#{{order_id}}</td>
+          </tr>
+          <tr class="details-row">
+            <td class="label">Item Ordered</td>
+            <td class="val">{{item_name}}</td>
+          </tr>
+          <tr class="details-row">
+            <td class="label">Email Address</td>
+            <td class="val-gold">{{buyer_email}}</td>
+          </tr>
+          <tr class="details-row">
+            <td class="label">Payment Method</td>
+            <td class="val-payment">{{payment_method}}</td>
+          </tr>
+          <tr class="details-row">
+            <td class="label">Payment Date</td>
+            <td class="val">{{payment_date}}</td>
+          </tr>
+          <tr class="details-row">
+            <td class="label">Tracking Number</td>
+            <td class="val-tracking">{{waybill_number}}</td>
+          </tr>
+        </table>
+        <div class="address-title">Shipping Address</div>
+        <div class="address-box">
+          <pre class="address-text" style="font-family: inherit; white-space: pre-wrap; margin: 0;">{{shipping_address}}</pre>
+        </div>
+        <div class="divider"></div>
+        <table style="width: 100%; margin-bottom: 30px;">
+          <tr>
+            <td style="color: #d4af37; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; font-size: 14px;">Amount Paid</td>
+            <td style="text-align: right; color: #ffffff; font-size: 28px; font-weight: 900;">R{{amount}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="footer">
+        <a href="https://drop-selling.com" class="footer-button">Return Home</a>
+        <div class="footer-text">
+          © 2026 Drop Selling International.<br>
+          All rights reserved.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
