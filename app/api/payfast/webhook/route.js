@@ -1,8 +1,26 @@
+/**
+ * © 2026 Bernie Vorster / WebWizSystems
+ * 
+ * Project: Ayoba Scrollytelling
+ * File: route.js
+ * 
+ * This codebase is proprietary and confidential.
+ * Unauthorized use, copying, modification, or distribution is strictly prohibited.
+ * 
+ * Built & maintained by WebWizSystems
+ * https://webwizsystems.com
+ * 
+ * Created: 2026-06-01
+ * Last Updated: 2026-06-01
+ * Signature ID: WWZ-AYOBA-SCROLLYTELLING-2026-911
+ */
+
 import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 
 const PAYFAST_ORDER = [
   "merchant_id",
+  "merchant_key",
   "return_url",
   "cancel_url",
   "notify_url",
@@ -30,9 +48,7 @@ const PAYFAST_ORDER = [
 ];
 
 function pfEncode(value) {
-  return encodeURIComponent(String(value).trim())
-    .replace(/%20/g, "+")
-    .replace(/%[0-9a-f]{2}/gi, (m) => m.toUpperCase());
+  return encodeURIComponent(String(value).trim()).replace(/%20/g, "+");
 }
 
 function generateSignature(data, passphrase) {
@@ -67,16 +83,29 @@ export async function POST(request) {
     const providedSignature = String(payload.signature ?? "").trim().toLowerCase();
     delete payload.signature;
 
-    const passphrase = (process.env.PAYFAST_PASSPHRASE ?? "").trim();
+    const sandboxMerchantId = (
+      process.env.PAYFAST_SANDBOX_MERCHANT_ID ?? "10000100"
+    ).trim();
+    const liveMerchantId = (
+      process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_ID ?? 
+      process.env.PAYFAST_MERCHANT_ID ?? 
+      "34565375"
+    ).trim();
+    const merchantId = String(payload.merchant_id ?? "").trim();
+    const allowedMerchantIds = [sandboxMerchantId, liveMerchantId].filter(Boolean);
+
+    if (allowedMerchantIds.length && !allowedMerchantIds.includes(merchantId)) {
+      return NextResponse.json({ error: "Invalid merchant_id" }, { status: 400 });
+    }
+
+    const passphrase =
+      merchantId === sandboxMerchantId
+        ? (process.env.PAYFAST_SANDBOX_PASSPHRASE ?? "").trim()
+        : (process.env.PAYFAST_PASSPHRASE ?? "Dropsellint2026").trim();
     const calculatedSignature = generateSignature(payload, passphrase).toLowerCase();
 
     if (!providedSignature || providedSignature !== calculatedSignature) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-    }
-
-    const expectedMerchantId = String(process.env.PAYFAST_MERCHANT_ID ?? "").trim();
-    if (expectedMerchantId && String(payload.merchant_id ?? "").trim() !== expectedMerchantId) {
-      return NextResponse.json({ error: "Invalid merchant_id" }, { status: 400 });
     }
 
     // Signature is valid; handle order update logic here as needed.

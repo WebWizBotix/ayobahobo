@@ -1,60 +1,66 @@
+/**
+ * © 2026 Bernie Vorster / WebWizSystems
+ * 
+ * Project: Ayoba Scrollytelling
+ * File: route.js
+ * 
+ * This codebase is proprietary and confidential.
+ * Unauthorized use, copying, modification, or distribution is strictly prohibited.
+ * 
+ * Built & maintained by WebWizSystems
+ * https://webwizsystems.com
+ * 
+ * Created: 2026-06-01
+ * Last Updated: 2026-06-01
+ * Signature ID: WWZ-AYOBA-SCROLLYTELLING-2026-911
+ */
+
 import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 
 const PAYFAST_SANDBOX_URL = "https://sandbox.payfast.co.za/eng/process";
 const PAYFAST_LIVE_URL = "https://www.payfast.co.za/eng/process";
-const PAYFAST_ORDER = [
-  "merchant_id",
-  "return_url",
-  "cancel_url",
-  "notify_url",
-  "name_first",
-  "name_last",
-  "email_address",
-  "cell_number",
-  "m_payment_id",
-  "amount",
-  "item_name",
-  "item_description",
-  "custom_int1",
-  "custom_int2",
-  "custom_int3",
-  "custom_int4",
-  "custom_int5",
-  "custom_str1",
-  "custom_str2",
-  "custom_str3",
-  "custom_str4",
-  "custom_str5",
-  "email_confirmation",
-  "confirmation_address",
-  "payment_method",
-];
-
-function pfEncode(value) {
-  return encodeURIComponent(String(value).trim())
-    .replace(/%20/g, "+")
-    .replace(/%[0-9a-f]{2}/gi, (m) => m.toUpperCase());
-}
 
 function generateSignature(data, passphrase) {
+  // 1. Build parameter string in this exact order:
+  const order = [
+    "merchant_id",
+    "merchant_key",
+    "return_url",
+    "cancel_url",
+    "notify_url",
+    "name_first",
+    "name_last",
+    "email_address",
+    "amount",
+    "item_name"
+  ];
+
   const parts = [];
-  for (const key of PAYFAST_ORDER) {
-    if (!(key in data)) continue;
+
+  for (const key of order) {
     const raw = data[key];
     if (raw === null || raw === undefined) continue;
-    const trimmed = String(raw).trim();
-    if (!trimmed) continue;
-    parts.push(`${key}=${pfEncode(trimmed)}`);
+    const value = String(raw).trim();
+    if (value === "") continue;
+
+    // 2. URL encode each value using encodeURIComponent, replace %20 with +
+    const encodedValue = encodeURIComponent(value).replace(/%20/g, "+");
+    
+    // 3. Join as key=value pairs with & between them
+    parts.push(`${key}=${encodedValue}`);
   }
 
+  let signatureString = parts.join("&");
+
+  // 4. Append &passphrase=... at the end
   const pp = (passphrase ?? "").trim();
   if (pp) {
-    parts.push(`passphrase=${pfEncode(pp)}`);
+    signatureString += `&passphrase=${encodeURIComponent(pp).replace(/%20/g, "+")}`;
   }
 
-  const payload = parts.join("&");
-  return createHash("md5").update(payload, "utf8").digest("hex");
+  // 5. MD5 hash the entire string
+  return createHash("md5").update(signatureString, "utf8").digest("hex");
 }
 
 export async function POST(request) {
@@ -65,23 +71,45 @@ export async function POST(request) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
     }
 
-    const merchantId = (process.env.PAYFAST_MERCHANT_ID ?? "34565375").trim();
-    const merchantKey = (process.env.PAYFAST_MERCHANT_KEY ?? "wzjgtpckgsck").trim();
-    const passphrase = (process.env.PAYFAST_PASSPHRASE ?? "").trim();
-    const isLive = String(process.env.PAYFAST_ENV ?? "").trim().toLowerCase() === "live";
-    const payfastUrl = isLive ? PAYFAST_LIVE_URL : PAYFAST_SANDBOX_URL;
+    const nextUrl = new URL(request.url);
+    const origin = nextUrl.origin;
+    const isLocalhost =
+      origin.includes("localhost") || origin.includes("127.0.0.1");
+    const envMode = String(process.env.PAYFAST_ENV ?? "sandbox")
+      .trim()
+      .toLowerCase();
+    
+    const useLive = envMode === "live" && !isLocalhost;
+    const payfastUrl = useLive ? PAYFAST_LIVE_URL : PAYFAST_SANDBOX_URL;
+
+    // 6. Make sure PAYFAST_PASSPHRASE is loaded from .env.local
+    const merchantId = (
+      process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_ID ??
+      process.env.PAYFAST_MERCHANT_ID ??
+      (useLive ? "34565375" : (process.env.PAYFAST_SANDBOX_MERCHANT_ID ?? "10000100"))
+    ).trim();
+
+    const merchantKey = (
+      process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_KEY ??
+      process.env.PAYFAST_MERCHANT_KEY ??
+      (useLive ? "wzjqtpckgqsck" : (process.env.PAYFAST_SANDBOX_MERCHANT_KEY ?? "46f0cd694581a"))
+    ).trim();
+
+    const passphrase = (
+      process.env.PAYFAST_PASSPHRASE ??
+      (useLive ? "Dropsellint2026" : (process.env.PAYFAST_SANDBOX_PASSPHRASE ?? ""))
+    ).trim();
 
     const orderId = String(Date.now());
     const itemName = String(body.itemName ?? "").trim().slice(0, 100);
     const buyerEmail = String(body.buyerEmail ?? "").trim();
     const buyerName = String(body.buyerName ?? "").trim();
 
-    const parts = buyerName.split(/\s+/).filter(Boolean);
-    const nameFirst = parts[0] ?? "";
-    const nameLast = parts.slice(1).join(" ");
+    const nameParts = buyerName.split(/\s+/).filter(Boolean);
+    const nameFirst = nameParts[0] ?? "";
+    const nameLast = nameParts.slice(1).join(" ");
 
-    const origin = request.nextUrl.origin;
-    const data = {
+    const signatureData = {
       merchant_id: merchantId,
       merchant_key: merchantKey,
       return_url: `${origin}/success?order_id=${orderId}&amount=${amountNum.toFixed(2)}`,
@@ -90,16 +118,27 @@ export async function POST(request) {
       name_first: nameFirst,
       name_last: nameLast,
       email_address: buyerEmail,
-      m_payment_id: orderId,
       amount: amountNum.toFixed(2),
       item_name: itemName || "Order",
     };
 
-    const signature = generateSignature(data, passphrase);
+    const signature = generateSignature(signatureData, passphrase);
+
+    console.log("DEBUG PAYFAST OUTGOING:", {
+      payfastUrl,
+      merchantId,
+      merchantKey,
+      passphrase,
+      signatureData,
+      signature
+    });
 
     return NextResponse.json({
       url: payfastUrl,
-      fields: { ...data, signature },
+      fields: {
+        ...signatureData,
+        signature,
+      },
     });
   } catch (error) {
     return NextResponse.json(

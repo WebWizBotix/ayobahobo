@@ -19,6 +19,11 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { useCart } from "./CartProvider";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { ChevronLeft, Mail, CheckCircle2 } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 
 async function submitPayFast({ amount, itemName, buyerEmail, buyerName }: {
   amount: string;
@@ -59,12 +64,6 @@ async function submitPayFast({ amount, itemName, buyerEmail, buyerName }: {
   document.body.appendChild(form);
   form.submit();
 }
-// ────────────────────────────────────────────────────────────────────────────
-import { useCart } from "./CartProvider";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { ChevronLeft, Mail, CheckCircle2 } from "lucide-react";
-import { createClient } from "@/utils/supabase/client";
 
 type CheckoutStep = "address" | "payfast" | "success";
 
