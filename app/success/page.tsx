@@ -143,6 +143,9 @@ function SuccessContent() {
       if (resOwner.ok) {
         console.log('Owner email sent successfully');
         localStorage.removeItem('shippingAddress');
+        localStorage.removeItem('waybill_number');
+        localStorage.removeItem('buyerEmail');
+        localStorage.removeItem('parcel_tracking_reference');
       } else {
         console.error('Failed to send owner email:', await resOwner.text());
       }
