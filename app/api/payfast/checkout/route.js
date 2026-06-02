@@ -73,32 +73,21 @@ export async function POST(request) {
 
     const nextUrl = new URL(request.url);
     const origin = nextUrl.origin;
-    const isLocalhost =
-      origin.includes("localhost") || origin.includes("127.0.0.1");
-    const envMode = String(process.env.PAYFAST_ENV ?? "sandbox")
-      .trim()
-      .toLowerCase();
     
-    const useLive = envMode === "live" && !isLocalhost;
-    const payfastUrl = useLive ? PAYFAST_LIVE_URL : PAYFAST_SANDBOX_URL;
+    const isDev = process.env.NODE_ENV === "development";
+    const payfastUrl = isDev ? PAYFAST_SANDBOX_URL : PAYFAST_LIVE_URL;
 
-    // 6. Make sure PAYFAST_PASSPHRASE is loaded from .env.local
-    const merchantId = (
-      process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_ID ??
-      process.env.PAYFAST_MERCHANT_ID ??
-      (useLive ? "34565375" : (process.env.PAYFAST_SANDBOX_MERCHANT_ID ?? "10000100"))
-    ).trim();
+    const merchantId = isDev
+      ? "10000100"
+      : (process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_ID ?? process.env.PAYFAST_MERCHANT_ID ?? "34565375").trim();
 
-    const merchantKey = (
-      process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_KEY ??
-      process.env.PAYFAST_MERCHANT_KEY ??
-      (useLive ? "wzjqtpckgqsck" : (process.env.PAYFAST_SANDBOX_MERCHANT_KEY ?? "46f0cd694581a"))
-    ).trim();
+    const merchantKey = isDev
+      ? "46f0cd694581a"
+      : (process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_KEY ?? process.env.PAYFAST_MERCHANT_KEY ?? "wzjqtpckgqsck").trim();
 
-    const passphrase = (
-      process.env.PAYFAST_PASSPHRASE ??
-      (useLive ? "Dropsellint2026" : (process.env.PAYFAST_SANDBOX_PASSPHRASE ?? ""))
-    ).trim();
+    const passphrase = isDev
+      ? "jt7NOE43FZPn"
+      : (process.env.PAYFAST_PASSPHRASE ?? "Dropsellint2026").trim();
 
     const orderId = String(Date.now());
     const itemName = String(body.itemName ?? "").trim().slice(0, 100);

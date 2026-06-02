@@ -92,7 +92,7 @@ function SuccessContent() {
     }
 
     const { data: { user } } = await supabase.auth.getUser();
-    const buyerEmail = user?.email || searchParams.get('email') || '';
+    const buyerEmail = user?.email || searchParams.get('email') || localStorage.getItem('buyerEmail') || '';
     const buyerName = user?.user_metadata?.full_name || searchParams.get('name') || buyerEmail.split('@')[0] || 'Customer';
     const amountVal = searchParams.get('amount') || '0';
     const itemName = searchParams.get('item_name') || 'Ayoba Hobo Collection';

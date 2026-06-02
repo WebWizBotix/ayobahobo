@@ -648,6 +648,7 @@ export default function PaymentPopup() {
                             return;
                           }
                           try {
+                            localStorage.setItem('buyerEmail', email);
                             await submitPayFast({
                               amount: getTotal().toFixed(2),
                               itemName: cartItems.map(i => i.name).join(', '),
