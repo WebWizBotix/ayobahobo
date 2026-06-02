@@ -101,7 +101,7 @@ export async function POST(request) {
     const signatureData = {
       merchant_id: merchantId,
       merchant_key: merchantKey,
-      return_url: `${origin}/success?order_id=${orderId}&amount=${amountNum.toFixed(2)}`,
+      return_url: `${origin}/success?order_id=${orderId}&amount=${amountNum.toFixed(2)}&item_name=${encodeURIComponent(itemName || "Order")}`,
       cancel_url: `${origin}`,
       notify_url: `${origin}/api/payfast/webhook`,
       name_first: nameFirst,
