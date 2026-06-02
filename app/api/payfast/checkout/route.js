@@ -74,20 +74,20 @@ export async function POST(request) {
     const nextUrl = new URL(request.url);
     const origin = nextUrl.origin;
     
-    const isDev = process.env.NODE_ENV === "development";
-    const payfastUrl = isDev ? PAYFAST_SANDBOX_URL : PAYFAST_LIVE_URL;
+    const isLive = false;
+    const payfastUrl = isLive ? PAYFAST_LIVE_URL : PAYFAST_SANDBOX_URL;
 
-    const merchantId = isDev
-      ? "10000100"
-      : (process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_ID ?? process.env.PAYFAST_MERCHANT_ID ?? "34565375").trim();
+    const merchantId = isLive
+      ? (process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_ID ?? process.env.PAYFAST_MERCHANT_ID ?? "34565375").trim()
+      : "10000100";
 
-    const merchantKey = isDev
-      ? "46f0cd694581a"
-      : (process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_KEY ?? process.env.PAYFAST_MERCHANT_KEY ?? "wzjqtpckgqsck").trim();
+    const merchantKey = isLive
+      ? (process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_KEY ?? process.env.NEXT_PUBLIC_PAYFAST_MERCHANT_KEY ?? "wzjqtpckgqsck").trim()
+      : "46f0cd694581a";
 
-    const passphrase = isDev
-      ? "jt7NOE43FZPn"
-      : (process.env.PAYFAST_PASSPHRASE ?? "Dropsellint2026").trim();
+    const passphrase = isLive
+      ? (process.env.PAYFAST_PASSPHRASE ?? "Dropsellint2026").trim()
+      : "jt7NOE43FZPn";
 
     const orderId = String(Date.now());
     const itemName = String(body.itemName ?? "").trim().slice(0, 100);
