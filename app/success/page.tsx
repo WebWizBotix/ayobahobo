@@ -180,7 +180,7 @@ function SuccessContent() {
           {/* Greeting */}
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-black text-gold uppercase tracking-tighter mb-2">
-              Thank You, {searchParams.get('name') || 'Customer'}!
+              Thank You, {shippingAddress?.fullName || searchParams.get('name') || 'Customer'}!
             </h1>
             <p className="text-white/40 text-xs uppercase tracking-widest font-medium">
               Your order has been received and confirmed.
@@ -197,11 +197,11 @@ function SuccessContent() {
             </div>
             <div className="flex justify-between items-center py-1">
               <span className="text-white/30 uppercase tracking-widest text-[10px] font-bold">Item</span>
-              <span className="text-white font-bold text-right max-w-[200px] truncate">{searchParams.get('item_name') || 'Drop Selling Course'}</span>
+              <span className="text-white font-bold text-right max-w-[200px] truncate">{'Ayoba Hobo Collection'}</span>
             </div>
             <div className="flex justify-between items-center py-1">
               <span className="text-white/30 uppercase tracking-widest text-[10px] font-bold">Email</span>
-              <span className="text-gold font-medium lowercase tracking-normal">{searchParams.get('email') || 'N/A'}</span>
+              <span className="text-gold font-medium lowercase tracking-normal">{localStorage.getItem('buyerEmail') || searchParams.get('email') || 'N/A'}</span>
             </div>
             <div className="flex justify-between items-center py-1">
               <span className="text-white/30 uppercase tracking-widest text-[10px] font-bold">Payment Date</span>
