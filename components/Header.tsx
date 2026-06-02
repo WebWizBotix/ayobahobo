@@ -149,13 +149,13 @@ export default function Header() {
             </motion.button>
 
             <div className="flex items-center gap-4 ml-4 border-l border-white/10 pl-8">
-              <a href="#" className="hover:opacity-60 transition-opacity" title="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=61573405146939" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity" title="Facebook">
                 <Image src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="Facebook" width={18} height={18} className="w-[18px] h-[18px] grayscale-0 brightness-200" />
               </a>
-              <a href="#" className="hover:opacity-60 transition-opacity" title="TikTok">
+              <a href="https://www.tiktok.com/@ayoba.hobo.perfume?_r=1&_t=ZS-96sNgcRC8gh" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity" title="TikTok">
                 <Image src="https://cdn-icons-png.flaticon.com/512/15713/15713404.png" alt="TikTok" width={18} height={18} className="w-[18px] h-[18px] grayscale-0 brightness-200" />
               </a>
-              <a href="#" className="hover:opacity-60 transition-opacity" title="Instagram">
+              <a href="https://www.instagram.com/ayobahobo?igsh=YXBjbGw2aDMzN2Zn" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity" title="Instagram">
                 <Image src="https://cdn-icons-png.flaticon.com/512/4923/4923005.png" alt="Instagram" width={18} height={18} className="w-[18px] h-[18px] grayscale-0 brightness-200" />
               </a>
             </div>
@@ -378,13 +378,13 @@ export default function Header() {
               )}
 
               <div className="flex gap-6 mt-4">
-                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
+                <a href="https://www.facebook.com/profile.php?id=61573405146939" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
                   <Image src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="Facebook" width={24} height={24} className="w-6 h-6 brightness-200" />
                 </a>
-                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
+                <a href="https://www.instagram.com/ayobahobo?igsh=YXBjbGw2aDMzN2Zn" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
                   <Image src="https://cdn-icons-png.flaticon.com/512/4923/4923005.png" alt="Instagram" width={24} height={24} className="w-6 h-6 brightness-200" />
                 </a>
-                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
+                <a href="https://www.tiktok.com/@ayoba.hobo.perfume?_r=1&_t=ZS-96sNgcRC8gh" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
                   <Image src="https://cdn-icons-png.flaticon.com/512/15713/15713404.png" alt="TikTok" width={24} height={24} className="w-6 h-6 brightness-200" />
                 </a>
               </div>
