@@ -126,8 +126,7 @@ export default function PaymentPopup() {
   }, [isPaymentOpen, supabase]);
   const [isProcessing] = useState(false);
   const [showEftDetails, setShowEftDetails] = useState(false);
-  const [eftSent, setEftSent] = useState(false);
-  const [eftLoading, setEftLoading] = useState(false);
+
   const [shippingCost, setShippingCost] = useState(0);
   const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
   const [addressForm, setAddressForm] = useState({
