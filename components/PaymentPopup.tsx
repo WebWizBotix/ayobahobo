@@ -655,7 +655,6 @@ export default function PaymentPopup() {
                         <span className="relative z-10 text-black">CONTINUE TO PAYFAST</span>
                       </button>
 
-                      {/* EFT Payment Option */}
                       <button
                         type="button"
                         onClick={async () => {
@@ -666,39 +665,10 @@ export default function PaymentPopup() {
                             return;
                           }
                           setShowEftDetails(true);
-                          if (!eftSent) {
-                            setEftLoading(true);
-                            try {
-                              const itemsList = cartItems.map(i => `${i.name} x${i.quantity} (${i.price})`).join(", ");
-                              const shippingDetails = `${addressForm.fullName}\n${addressForm.streetAddress}\n${addressForm.suburb}, ${addressForm.city}\n${addressForm.province}, ${addressForm.postalCode}\nPhone: ${addressForm.phoneNumber}`;
-                              
-                              await fetch('/api/send-email', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                  type: 'owner',
-                                  buyer_name: addressForm.fullName,
-                                  buyer_email: email,
-                                  order_id: referenceNumber,
-                                  item_name: itemsList,
-                                  amount: getTotal().toFixed(2),
-                                  payment_method: 'EFT',
-                                  payment_date: new Date().toLocaleDateString('en-ZA'),
-                                  shipping_address: shippingDetails,
-                                  waybill_number: 'N/A'
-                                })
-                              });
-                              setEftSent(true);
-                            } catch (err) {
-                              console.error('EFT notification error:', err);
-                            } finally {
-                              setEftLoading(false);
-                            }
-                          }
                         }}
                         className="w-full py-5 bg-transparent border-2 border-gold/70 text-white font-black uppercase tracking-[0.4em] text-[13px] hover:border-gold hover:bg-gold/10 transition-all duration-300 rounded-2xl mt-2"
                       >
-                        {eftLoading ? 'SENDING...' : 'PAY VIA EFT'}
+                        PAY VIA EFT
                       </button>
 
                       {/* EFT banking details rendered as a popup — see AnimatePresence block below */}
@@ -822,12 +792,6 @@ export default function PaymentPopup() {
                     <br />
                     Your order will be processed once payment is confirmed.
                   </div>
-
-                  {eftSent && (
-                    <p className="text-[10px] text-gold/70 uppercase tracking-[0.2em]">
-                      ✓ Owner notified — we&apos;re expecting your payment
-                    </p>
-                  )}
 
                   <button
                     onClick={() => setShowEftDetails(false)}
