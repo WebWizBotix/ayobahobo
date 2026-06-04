@@ -74,7 +74,7 @@ export async function POST(request) {
     const nextUrl = new URL(request.url);
     const origin = nextUrl.origin;
     
-    const isLive = false;
+    const isLive = true;
     const payfastUrl = isLive ? PAYFAST_LIVE_URL : PAYFAST_SANDBOX_URL;
 
     const merchantId = isLive
