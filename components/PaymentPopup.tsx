@@ -76,10 +76,7 @@ export default function PaymentPopup() {
   useEffect(() => {
     if (isPaymentOpen) {
       supabase.auth.getSession().then(({ data: { session } }) => {
-        if (!session) {
-          setIsPaymentOpen(false);
-          setIsAuthOpen(true);
-        } else {
+        if (session) {
           // Fetch existing shipping address from public.addresses table
           supabase
             .from("addresses")
@@ -98,30 +95,35 @@ export default function PaymentPopup() {
                   phoneNumber: data.phone_number || ""
                 });
               } else {
-                // Fallback to localStorage if Supabase is empty but local exists
-                const stored = localStorage.getItem("shippingAddress");
-                if (stored) {
-                  try {
-                    const parsed = JSON.parse(stored);
-                    setAddressForm({
-                      fullName: parsed.fullName || "",
-                      streetAddress: parsed.streetAddress || "",
-                      suburb: parsed.suburb || "",
-                      city: parsed.city || "",
-                      province: parsed.province || "",
-                      postalCode: parsed.postalCode || "",
-                      phoneNumber: parsed.phoneNumber || ""
-                    });
-                  } catch (e) {
-                    console.error("Failed to parse local shipping address", e);
-                  }
-                }
+                loadFromLocalStorage();
               }
             });
+        } else {
+          loadFromLocalStorage();
         }
       });
     }
-  }, [isPaymentOpen, setIsPaymentOpen, setIsAuthOpen, supabase]);
+
+    function loadFromLocalStorage() {
+      const stored = localStorage.getItem("shippingAddress");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          setAddressForm({
+            fullName: parsed.fullName || "",
+            streetAddress: parsed.streetAddress || "",
+            suburb: parsed.suburb || "",
+            city: parsed.city || "",
+            province: parsed.province || "",
+            postalCode: parsed.postalCode || "",
+            phoneNumber: parsed.phoneNumber || ""
+          });
+        } catch (e) {
+          console.error("Failed to parse local shipping address", e);
+        }
+      }
+    }
+  }, [isPaymentOpen, supabase]);
   const [isProcessing] = useState(false);
   const [showEftDetails, setShowEftDetails] = useState(false);
   const [eftSent, setEftSent] = useState(false);
