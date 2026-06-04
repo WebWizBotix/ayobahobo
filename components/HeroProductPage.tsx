@@ -104,12 +104,12 @@ export default function HeroProductPage() {
             transition={{ duration: 1.0, delay: 0.5, ease: "easeOut" }}
             className="relative z-20"
           >
-            <span className="text-gold tracking-[0.3em] text-[10px] uppercase mb-6 block font-bold">
+            <span className="text-gold tracking-[0.3em] text-xs lg:text-[10px] uppercase mb-6 block font-bold">
               Ayoba Hobo
             </span>
 
-            <div className="font-sans text-gray-400 text-[10px] lg:text-xs max-w-xs mb-10 leading-relaxed space-y-4">
-              <p className="font-bold text-gold uppercase tracking-widest text-[11px]">About Us — Ayoba Hobo</p>
+            <div className="font-sans text-gray-400 text-sm lg:text-xs max-w-xs mb-10 leading-relaxed space-y-4">
+              <p className="font-bold text-gold uppercase tracking-widest text-xs lg:text-[11px]">About Us — Ayoba Hobo</p>
               <p>
                 Ayoba Hobo is a perfume brand created for generations to follow. Built on simple but powerful life lessons in mind to encourage people to stay happy, to feel inspire, to feel confidence and to celebrate life&apos;s Untold Happy Secrets.
               </p>
