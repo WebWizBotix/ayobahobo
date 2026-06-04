@@ -224,13 +224,7 @@ export default function PaymentPopup() {
                 mobile_number: addr.phoneNumber
               },
               parcels: [
-                {
-                  submitted_length_cm: 20,
-                  submitted_width_cm: 15,
-                  submitted_height_cm: 10,
-                  submitted_weight_kg: 0.3,
-                  parcel_description: "Perfume"
-                }
+                { submitted_length_cm: 26, submitted_width_cm: 20, submitted_height_cm: 2, submitted_weight_kg: 0.2, parcel_description: "Satchel - Perfume" }
               ],
               declared_value: parseFloat(orderTotal)
             };
@@ -347,13 +341,7 @@ export default function PaymentPopup() {
           code: addressForm.postalCode
         },
         parcels: [
-          {
-            submitted_length_cm: 20,
-            submitted_width_cm: 15,
-            submitted_height_cm: 10,
-            submitted_weight_kg: cartItems.reduce((acc, item) => acc + (item.weight || 0.3) * item.quantity, 0),
-            parcel_description: "Perfume"
-          }
+          { submitted_length_cm: 26, submitted_width_cm: 20, submitted_height_cm: 2, submitted_weight_kg: 0.2, parcel_description: "Satchel - Perfume" }
         ],
         declared_value: getSubtotal()
       };
