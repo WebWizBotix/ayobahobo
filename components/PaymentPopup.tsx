@@ -69,7 +69,7 @@ type CheckoutStep = "address" | "payfast" | "success";
 
 export default function PaymentPopup() {
   const supabase = createClient();
-  const { isPaymentOpen, setIsPaymentOpen, cartItems, setIsAuthOpen } = useCart();
+  const { isPaymentOpen, setIsPaymentOpen, cartItems } = useCart();
   const [step, setStep] = useState<CheckoutStep>("address");
 
   // Check authentication session and load saved address when checkout/payment popup is opened
