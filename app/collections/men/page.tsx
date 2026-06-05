@@ -67,7 +67,7 @@ export default function MenCollectionPage() {
             image: "/products/men/product_1.jpeg",
             volume: "50ML",
             fragranceType: "ORIENTAL WOODY / AMBER",
-            vibe: "LUXURIOUS / MYSTERIOUS / MESCALINE",
+            vibe: "LUXURIOUS / MYSTERIOUS / MASCULINE",
             bestTime: "NIGHT / SPECIAL OCCASIONS / SOCIAL EVENTS",
             concentration: "PERFUME, MIXED AT 40%, ALCOHOL BASE"
           },

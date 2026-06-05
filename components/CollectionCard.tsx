@@ -51,10 +51,10 @@ export default function CollectionCard({ title, image, href, description }: Coll
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
         
         {/* Content */}
-        <div className="absolute inset-0 p-8 flex flex-col justify-end transition-transform duration-500 group-hover:translate-y-[-10px]">
-          <span className="text-gold text-[10px] uppercase tracking-[0.3em] font-bold mb-2">Category</span>
-          <h3 className="text-white text-4xl font-bold tracking-tighter mb-4">{title}</h3>
-          <p className="text-white/60 text-sm max-w-[80%] mb-8 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end transition-transform duration-500 group-hover:translate-y-[-10px]">
+          <span className="text-gold text-[10px] uppercase tracking-[0.3em] font-bold mb-1 md:mb-2">Category</span>
+          <h3 className="text-white text-3xl md:text-4xl font-bold tracking-tighter mb-2 md:mb-4">{title}</h3>
+          <p className="text-white/60 text-xs md:text-sm max-w-[80%] leading-relaxed max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 group-hover:mb-8 transition-all duration-500 overflow-hidden">
             {description}
           </p>
           
