@@ -36,15 +36,15 @@ export default function HeroProductPage() {
 
   const products = [
     { 
-      name: "My houding", 
+      name: "My Attitude", 
       image: "/Sticky perfume/Transparent Perfume NO BG.png" 
     },
     { 
-      name: "Stink voet", 
+      name: "Smelly Feet", 
       image: "/Heroproducts/Transparent Perfumemenhero.png" 
     },
     { 
-      name: "Spoeg druppels", 
+      name: "Spit Drops", 
       image: "/Heroproducts/Transparent Perfumewomenhero.png" 
     },
   ];
